@@ -13,20 +13,21 @@ export function Home() {
 		{ label: "Walk the dog", done: false }
 	]);
 
-    const [todo, setTodo] = useState("");
-    
-    
+	const [todo, setTodo] = useState("");
 
 	const handleKeyPress = e => {
-		// e.preventDefault();
 		// let aux = list;
 		if (e.key === "Enter") {
+			console.log("I'm working");
+			e.preventDefault();
 			// aux.push(todo)
 			// setList(aux) //secundary method
-            setList(list.concat([{ label: todo, done: false }]  ));
-            setTodo("");
+			list.push({ label: todo, done: false });
+			setTodo("");
 		}
 	};
+	console.log(todo);
+
 	return (
 		<div className="text-center d-flex flex-column align-items-center justify-content-center">
 			<h1>To Do List</h1>
@@ -38,8 +39,9 @@ export function Home() {
 							className="form-control"
 							type="text"
 							placeholder="What has to be done?"
-                            onChange={e => setTodo(e.target.value)}
-                            onKeyPress
+							onChange={e => setTodo(e.target.value)}
+							onKeyPress={handleKeyPress}
+							value={todo}
 						/>
 					</li>
 					{list.map((item, index) => {
