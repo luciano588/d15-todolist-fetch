@@ -16,17 +16,27 @@ export function Home() {
 	const [todo, setTodo] = useState("");
 
 	const handleKeyPress = e => {
-		// let aux = list;
 		if (e.key === "Enter") {
-			console.log("I'm working");
-			e.preventDefault();
-			// aux.push(todo)
-			// setList(aux) //secundary method
-			list.push({ label: todo, done: false });
-			setTodo("");
+			// console.log("I'm working");
+			// e.preventDefault();
+			// list.push({ label: todo, done: false });
+			// setTodo("");
+			setList(list.concat({ label: currentTodo, done: false }));
+			setCurrentTodo("");
 		}
 	};
-	console.log(todo);
+	const deleteTodo = index => {
+		let newList = list.filter((item, i) => {
+			return i !== index;
+		});
+		setList(newList);
+	};
+
+	const handleCompleteTodo = index => {
+		let newList = [].concat(list);
+		newList[index].done = !newList[index].done;
+		setList(newList);
+	};
 
 	return (
 		<div className="text-center d-flex flex-column align-items-center justify-content-center">
@@ -39,17 +49,20 @@ export function Home() {
 							className="form-control"
 							type="text"
 							placeholder="What has to be done?"
-							onChange={e => setTodo(e.target.value)}
-							onKeyPress={handleKeyPress}
-							value={todo}
+							aria-label="add to do"
+							value={currentTodo}
+							onChange={e => setCurrentTodo(e.target.value)}
+							onKeyPress={e => handleKeyPress(e)}
 						/>
 					</li>
 					{list.map((item, index) => {
 						return (
-							<li key={index}>
+							<li className="list.group-item" key={index}>
 								{" "}
 								{item.label}{" "}
-								<span>
+								<span
+									className="delete float-right"
+									onClick={() => deleteTodo(index)}>
 									<FontAwesomeIcon icon={faTimes} />{" "}
 								</span>
 							</li>
