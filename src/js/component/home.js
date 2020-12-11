@@ -21,8 +21,8 @@ export function Home() {
 			// e.preventDefault();
 			// list.push({ label: todo, done: false });
 			// setTodo("");
-			setList(list.concat({ label: currentTodo, done: false }));
-			setCurrentTodo("");
+			setList(list.concat({ label: todo, done: false }));
+			setTodo("");
 		}
 	};
 	const deleteTodo = index => {
@@ -41,7 +41,7 @@ export function Home() {
 	return (
 		<div className="text-center d-flex flex-column align-items-center justify-content-center">
 			<h1>To Do List</h1>
-			<form className="">
+			<form className="" onSubmit={e => e.preventDefault()}>
 				<ul className="list-unstyled">
 					<li>
 						{" "}
@@ -50,8 +50,8 @@ export function Home() {
 							type="text"
 							placeholder="What has to be done?"
 							aria-label="add to do"
-							value={currentTodo}
-							onChange={e => setCurrentTodo(e.target.value)}
+							value={todo}
+							onChange={e => setTodo(e.target.value)}
 							onKeyPress={e => handleKeyPress(e)}
 						/>
 					</li>
