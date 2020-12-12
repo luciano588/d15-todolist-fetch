@@ -18,3 +18,19 @@ width: 100%;
 max-width: 500px;
 }
 
+.status{
+width: 25px ;
+height: 25px;
+&.done{
+    &:after{
+        content:'\2713';
+        font-size: 35px;
+        color: blueviolet;
+            position: absolute;
+    top: -7px;
+    left: 23px;
+        
+    }
+}
+
+}

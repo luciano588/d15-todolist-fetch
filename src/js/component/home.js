@@ -42,7 +42,7 @@ export function Home() {
 		<div className="text-center d-flex flex-column align-items-center justify-content-center">
 			<h1>To Do List</h1>
 			<form className="" onSubmit={e => e.preventDefault()}>
-				<ul className="list-unstyled">
+				<ul className="list-unstyled list-group">
 					<li>
 						{" "}
 						<input
@@ -57,13 +57,23 @@ export function Home() {
 					</li>
 					{list.map((item, index) => {
 						return (
-							<li className="list.group-item" key={index}>
-								{" "}
+							<li
+								className="list-group-item d-flex justify-content-between align-items-center "
+								key={index}>
+								<div
+									className={
+										item.done
+											? "status border  rounded-circle d-inline-block done"
+											: "status border  rounded-circle d-inline-block"
+									}
+									onClick={() => handleCompleteTodo(index)}>
+									{" "}
+								</div>
 								{item.label}{" "}
 								<span
 									className="delete float-right"
 									onClick={() => deleteTodo(index)}>
-									<FontAwesomeIcon icon={faTimes} />{" "}
+									<FontAwesomeIcon icon={faTimes} />
 								</span>
 							</li>
 						);
