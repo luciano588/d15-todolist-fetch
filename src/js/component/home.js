@@ -8,6 +8,8 @@ import { array } from "prop-types";
 
 //create your first component
 export function Home() {
+	const [deleteState, setDeleteState] = useState();
+	const [deleteIndex, setDeleteIndex] = useState("delete-none");
 	const [list, setList] = useState([
 		{ label: "Walk the dog", done: false },
 		{ label: "Walk the dog", done: false }
@@ -58,6 +60,17 @@ export function Home() {
 					{list.map((item, index) => {
 						return (
 							<li
+								onMouseOver={() => {
+									setDeleteIndex(index);
+									setDeleteState(
+										deleteIndex === index
+											? "delete-none"
+											: "delete-visible"
+									);
+								}}
+								onMouseOut={() => {
+									setDeleteState("delete-none");
+								}}
 								className="list-group-item d-flex justify-content-between align-items-center "
 								key={index}>
 								<div
@@ -71,14 +84,15 @@ export function Home() {
 								</div>
 								{item.label}{" "}
 								<span
-									className="delete float-right"
+									className={`delete float-right ${deleteIndex ===
+										index && deleteState}`}
 									onClick={() => deleteTodo(index)}>
 									<FontAwesomeIcon icon={faTimes} />
 								</span>
 							</li>
 						);
 					})}
-					<li>
+					<li className="items">
 						{list.length} item
 						{list.length > 1 || list.length === 0 ? "s" : null} left
 					</li>

@@ -12,12 +12,20 @@
 
 */
 body{
+    background:lightgray;
 }
 form {
 width: 100%;
 max-width: 500px;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+.delete-none{
+    display: none;
 
+}
+.delete-visible{
+  display: visible;
+}
 .status{
 width: 25px ;
 height: 25px;
@@ -33,4 +41,12 @@ height: 25px;
     }
 }
 
+}
+
+.items{
+    background: white;
+    display: flex;
+    font-size: 12px;
+    padding: 5px;
+        justify-content: flex-end;
 }
