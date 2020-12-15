@@ -8,11 +8,10 @@ import { array } from "prop-types";
 
 //create your first component
 export function Home() {
-	const [deleteState, setDeleteState] = useState();
 	const [deleteIndex, setDeleteIndex] = useState();
 	const [list, setList] = useState([
-		{ label: "Walk the dog", done: false },
-		{ label: "Walk the dog", done: false }
+		{ label: "Do this", done: false },
+		{ label: "Do That", done: false }
 	]);
 
 	const [todo, setTodo] = useState("");
@@ -62,16 +61,11 @@ export function Home() {
 							<li
 								onMouseOver={() => {
 									setDeleteIndex(index);
-									setDeleteState(
-										deleteIndex === index
-											? "delete-visible"
-											: "delete-none"
-									);
 								}}
 								onMouseOut={() => {
-									setDeleteState("delete-none");
+									setDeleteIndex(null);
 								}}
-								className="list-group-item d-flex justify-content-between align-items-center "
+								className="list-group-item d-flex justify-content-between  text-center align-items-center "
 								key={index}>
 								<div
 									className={
@@ -84,8 +78,11 @@ export function Home() {
 								</div>
 								{item.label}{" "}
 								<span
-									className={`delete float-right ${deleteIndex ===
-										index && deleteState}`}
+									className={`delete float-right ${
+										deleteIndex === index
+											? "delete-visible"
+											: "delete-none"
+									}`}
 									onClick={() => deleteTodo(index)}>
 									<FontAwesomeIcon icon={faTimes} />
 								</span>
