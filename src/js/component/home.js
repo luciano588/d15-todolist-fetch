@@ -39,7 +39,7 @@ export function Home() {
 				if (!resp.ok) throw new Error(resp.statusText);
 				return resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
 			})
-			.then(data => {
+			.then(() => {
 				syncList();
 			})
 			.catch(error => {
