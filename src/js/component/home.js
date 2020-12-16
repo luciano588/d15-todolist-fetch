@@ -8,21 +8,60 @@ import { array } from "prop-types";
 
 //create your first component
 export function Home() {
+	const urlApi = "https://assets.breatheco.de/apis/fake/todos/user/luc588";
+	const [todolist, setTodoList] = useState([]);
+	useEffect(() => {
+		syncList();
+	}, []);
+
+	const syncList = () => {
+		return fetch(urlApi)
+			.then(resp => {
+				return resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
+			})
+			.then(data => {
+				setList(data);
+			})
+			.catch(error => {
+				//error handling
+				console.log(error);
+			});
+	};
+	const updateTodos = list => {
+		return fetch(urlApi, {
+			method: "PUT",
+			body: JSON.stringify(list),
+			headers: {
+				"Content-Type": "application/json"
+			}
+		})
+			.then(resp => {
+				if (!resp.ok) throw new Error(resp.statusText);
+				return resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
+			})
+			.then(data => {
+				syncList();
+			})
+			.catch(error => {
+				//error handling
+				console.error(error);
+			});
+	};
+
 	const [deleteIndex, setDeleteIndex] = useState();
-	const [list, setList] = useState([
-		{ label: "Do this", done: false },
-		{ label: "Do That", done: false }
-	]);
+	const [list, setList] = useState([]);
 
 	const [todo, setTodo] = useState("");
 
 	const handleKeyPress = e => {
 		if (e.key === "Enter") {
-			// console.log("I'm working");
-			// e.preventDefault();
-			// list.push({ label: todo, done: false });
-			// setTodo("");
-			setList(list.concat({ label: todo, done: false }));
+			let newList = list.concat([
+				{
+					label: todo,
+					done: false
+				}
+			]);
+			updateTodos(newList);
 			setTodo("");
 		}
 	};
@@ -30,7 +69,7 @@ export function Home() {
 		let newList = list.filter((item, i) => {
 			return i !== index;
 		});
-		setList(newList);
+		updateTodos(newList);
 	};
 
 	const handleCompleteTodo = index => {
@@ -90,6 +129,14 @@ export function Home() {
 						);
 					})}
 					<li className="items">
+						<span
+							onClick={() =>
+								updateTodos([
+									{ label: "sample todo", done: false }
+								])
+							}>
+							Clear all
+						</span>
 						{list.length} item
 						{list.length > 1 || list.length === 0 ? "s" : null} left
 					</li>
