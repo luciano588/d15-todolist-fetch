@@ -132,7 +132,10 @@ export function Home() {
 						<span
 							onClick={() =>
 								updateTodos([
-									{ label: "sample todo", done: false }
+									{
+										label: "Type a task and press enter",
+										done: false
+									}
 								])
 							}>
 							Clear all
